@@ -8,7 +8,7 @@ import javax.swing.SwingUtilities;
 public class Main {
 
     public static void main(String[] args) {
-        String gowno = "GÓWNO";
+        String gowno = "GÓWNO xd";
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame(gowno + " App");
             JButton button = new JButton("Click Me!");
