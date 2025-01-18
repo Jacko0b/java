@@ -1,24 +1,18 @@
 package com.github.jacko0b;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 public class Main {
 
     public static void main(String[] args) {
-        String gowno = "GÓWNO xd";
+        String autor = "Jakub Sobota 200816";
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame(gowno + " App");
-            JButton button = new JButton("Click Me!");
+            JFrame frame = new JFrame(autor);
 
-            button.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Hello " + gowno + "!"));
-
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(300, 200);
-            frame.add(button);
             frame.setVisible(true);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         });
     }
 }
