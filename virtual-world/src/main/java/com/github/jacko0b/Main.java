@@ -14,5 +14,12 @@ public class Main {
             frame.setVisible(true);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         });
+        World world = new World(20, 20);
+        world.addCreature(new Wolf(2, 4));
+        world.addCreature(new Sheep(4, 2));
+        for (Creature c : world.getMap()) {
+            c.draw();
+            System.out.println("instance number:" + c.instanceNumber + "no of instances" + Creature.numberOfInstances);
+        }
     }
 }

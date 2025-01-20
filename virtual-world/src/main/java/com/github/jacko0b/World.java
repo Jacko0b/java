@@ -6,6 +6,11 @@ import java.util.List;
 public class World {
 
     private final List<Creature> creatures;
+
+    public List<Creature> getMap() {
+        return creatures;
+    }
+
     private final int width;
     private final int height;
 

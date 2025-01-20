@@ -5,12 +5,23 @@ public abstract class Creature {
     public Creature(int x, int y) {
         this.x = x;
         this.y = y;
+        this.instanceNumber = numberOfInstances++;
     }
 
+    protected static int numberOfInstances = 0;
+    protected int instanceNumber;
     protected int strength;
     protected int initiative;
     protected int x, y;
     protected World world;
+
+    public static int getNumberOfInstances() {
+        return numberOfInstances;
+    }
+
+    public int getInstanceNumber() {
+        return instanceNumber;
+    }
 
     public int getX() {
         return x;
@@ -33,4 +44,5 @@ public abstract class Creature {
     public abstract void collision(Creature other);
 
     public abstract void draw();
+
 }
