@@ -36,7 +36,10 @@ public class World {
     }
 
     public void drawWorld() {
-
+        for (Creature c : creatures) {
+            c.draw();
+            System.out.println("instance number:" + c.instanceNumber + " no of instances" + Creature.numberOfInstances);
+        }
     }
 
     private boolean isInRange(int x, int y) {

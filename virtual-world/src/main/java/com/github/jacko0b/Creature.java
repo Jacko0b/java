@@ -2,10 +2,11 @@ package com.github.jacko0b;
 
 public abstract class Creature {
 
-    public Creature(int x, int y) {
+    public Creature(int x, int y, World world) {
         this.x = x;
         this.y = y;
         this.instanceNumber = numberOfInstances++;
+        this.world = world;
     }
 
     protected static int numberOfInstances = 0;
