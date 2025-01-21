@@ -5,29 +5,16 @@ import java.util.List;
 
 public class World {
 
-    private final List<Creature> creatures;
-
-    public List<Creature> getMap() {
-        return creatures;
-    }
-
-    private final int width;
-    private final int height;
+    private final List<List<Creature>> map;
 
     public World(int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.creatures = new ArrayList<>();
-    }
-
-    public void addCreature(Creature creature) {
-        try {
-            if (!isInRange(creature.getX(), creature.getY())) {
-                throw new IllegalArgumentException("Nie można dodać organizmu poza granicami świata!");
+        map = new ArrayList<>();
+        for (int i = 0; i < height; i++) {
+            List<Creature> row = new ArrayList<>();
+            for (int j = 0; j < width; j++) {
+                row.add(null);
             }
-            creatures.add(creature);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            map.add(row);
         }
     }
 
@@ -35,14 +22,63 @@ public class World {
 
     }
 
-    public void drawWorld() {
-        for (Creature c : creatures) {
-            c.draw();
-            System.out.println("instance number:" + c.instanceNumber + " no of instances" + Creature.numberOfInstances);
+    public void setCreature(Creature creature) {
+        if (isInRange(creature.getX(), creature.getY())) {
+            if (map.get(creature.getY()).get(creature.getX()) == null) {
+                map.get(creature.getY()).set(creature.getX(), creature);
+            } else {
+                throw new IllegalArgumentException("Pole(" + creature.getX() + "," + creature.getY() + ") jest zajęte!");
+            }
+        } else {
+            throw new IllegalArgumentException("Nie można dodać organizmu poza granicami świata!");
+        }
+    }
+
+    public void setCreature(Creature creature, int x, int y) {
+        if (isInRange(x, y)) {
+            if (map.get(y).get(x) == null) {
+                map.get(y).set(x, creature);
+            } else {
+                throw new IllegalArgumentException("Pole(" + x + "," + y + ") jest zajęte!");
+            }
+        } else {
+            throw new IllegalArgumentException("Nie można dodać organizmu poza granicami świata!");
+        }
+    }
+
+    public void deleteCreature(Creature creature) {
+        int x = creature.getX();
+        int y = creature.getY();
+        if (isInRange(x, y)) {
+            map.get(y).set(x, null);
+            creature.setIsDead(true);
+        } else {
+            throw new IllegalArgumentException("Nie można usunąć organizmu poza granicami świata!");
+        }
+    }
+
+    public Creature getCreature(int x, int y) {
+        if (isInRange(x, y)) {
+            return map.get(y).get(x);
+        } else {
+            throw new IllegalArgumentException("Nie można pobrać organizmu spoza mapy!");
         }
     }
 
     private boolean isInRange(int x, int y) {
-        return x >= 0 && x < width && y >= 0 && y < height;
+        return x >= 0 && x < getWidth() && y >= 0 && y < getHeight();
     }
+
+    public List<List<Creature>> getMap() {
+        return map;
+    }
+
+    public int getWidth() {
+        return map.get(0).size();
+    }
+
+    public int getHeight() {
+        return map.size();
+    }
+
 }

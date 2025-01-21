@@ -5,6 +5,7 @@ public abstract class Creature {
     public Creature(int x, int y, World world) {
         this.x = x;
         this.y = y;
+        this.isDead = false;
         this.instanceNumber = numberOfInstances++;
         this.world = world;
     }
@@ -15,6 +16,7 @@ public abstract class Creature {
     protected int initiative;
     protected int x, y;
     protected World world;
+    protected boolean isDead;
 
     public static int getNumberOfInstances() {
         return numberOfInstances;
@@ -45,5 +47,13 @@ public abstract class Creature {
     public abstract void collision(Creature other);
 
     public abstract void draw();
+
+    public boolean isIsDead() {
+        return isDead;
+    }
+
+    public void setIsDead(boolean isDead) {
+        this.isDead = isDead;
+    }
 
 }
