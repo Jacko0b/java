@@ -19,7 +19,32 @@ public class World {
     }
 
     public void makeTurn() {
+        //Tworzenie listy żywych organizmów
+        List<Creature> creatures = new ArrayList<>();
+        for (int y = 0; y < getHeight(); y++) {
+            for (int x = 0; x < getWidth(); x++) {
+                Creature c = map.get(y).get(x);
+                if (c != null && !c.isDead()) {
+                    creatures.add(c);
+                }
+            }
+        }
 
+        //Sortowanie kolejki akcji
+        creatures.sort((a, b) -> {
+            int compare = Integer.compare(b.getInitiative(), a.getInitiative());
+            if (compare == 0) {
+                return Integer.compare(a.getInstanceNumber(), b.getInstanceNumber());
+            }
+            return compare;
+        });
+
+        //Wywołanie kolejki akcji
+        for (Creature c : creatures) {
+            if (!c.isDead()) {
+                c.action();
+            }
+        }
     }
 
     public void setCreature(Creature creature) {

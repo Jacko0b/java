@@ -1,6 +1,6 @@
 package com.github.jacko0b;
 
-public class Animal extends Creature {
+public abstract class Animal extends Creature {
 
     public Animal(int x, int y, World world) {
         super(x, y, world);
@@ -20,4 +20,5 @@ public class Animal extends Creature {
     public void draw() {
         System.out.println("draw: " + this);
     }
+
 }

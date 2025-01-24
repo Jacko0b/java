@@ -10,6 +10,7 @@ public class Main {
         //todo fabryka
         world.setCreature(new Wolf(1, 2, world));
         world.setCreature(new Sheep(19, 19, world));
+        world.setCreature(new Sheep(5, 5, world));
         //-------------
 
         worldRenderer.initFrame();
