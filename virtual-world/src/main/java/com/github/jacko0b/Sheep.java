@@ -18,6 +18,7 @@ public class Sheep extends Animal {
         super(x, y, world);
         this.strength = 4;
         this.initiative = 4;
+        this.species = Species.SHEEP;
     }
 
     @Override

@@ -18,7 +18,7 @@ class Wolf extends Animal {
         super(x, y, world);
         this.strength = 9;
         this.initiative = 5;
-
+        this.species = Species.WOLF;
     }
 
     @Override
