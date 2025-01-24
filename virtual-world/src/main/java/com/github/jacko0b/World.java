@@ -1,6 +1,7 @@
 package com.github.jacko0b;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class World {
@@ -31,12 +32,17 @@ public class World {
         }
 
         //Sortowanie kolejki akcji
-        creatures.sort((a, b) -> {
-            int compare = Integer.compare(b.getInitiative(), a.getInitiative());
-            if (compare == 0) {
-                return Integer.compare(a.getInstanceNumber(), b.getInstanceNumber());
+        //Anonimowa klasa 
+        creatures.sort(new Comparator<Creature>() {
+
+            @Override
+            public int compare(Creature a, Creature b) {
+                int cmp = Integer.compare(b.getInitiative(), a.getInitiative());
+                if (cmp == 0) {
+                    return Integer.compare(a.getInstanceNumber(), b.getInstanceNumber());
+                }
+                return cmp;
             }
-            return compare;
         });
 
         //Wywołanie kolejki akcji
@@ -104,6 +110,47 @@ public class World {
 
     public int getHeight() {
         return map.size();
+    }
+
+    // Lista wszystkich dostępnych sąsiednich pól w granicach mapy
+    public List<int[]> getNeighborsInRange(int x, int y) {
+        List<int[]> neighbors = new ArrayList<>();
+
+        int[][] directions = {
+            {-1, -1}, {0, -1}, {1, -1},
+            {-1, 0}, {1, 0},
+            {-1, 1}, {0, 1}, {1, 1}
+        };
+
+        for (int[] direction : directions) {
+            int newX = x + direction[0];
+            int newY = y + direction[1];
+            if (isInRange(newX, newY)) {
+                neighbors.add(new int[]{newX, newY});
+            }
+        }
+        return neighbors;
+    }
+
+    // Puste pola w zasięgu
+    public List<int[]> getEmptyNeighbors(int x, int y) {
+        List<int[]> neighbors = getNeighborsInRange(x, y);
+        neighbors.removeIf(coord -> getCreature(coord[0], coord[1]) != null);
+        for (int[] neighbor : neighbors) {
+            if (getCreature(neighbor[0], neighbor[1]) != null) {
+                neighbors.remove(neighbor);
+            }
+        }
+        return neighbors;
+    }
+
+    // Losowe pole z listy
+    public int[] getRandomFromList(List<int[]> coords) {
+        if (coords.isEmpty()) {
+            return null;
+        }
+        int rand = (int) (Math.random() * coords.size());
+        return coords.get(rand);
     }
 
 }

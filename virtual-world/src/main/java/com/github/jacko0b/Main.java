@@ -11,6 +11,8 @@ public class Main {
         world.setCreature(new Wolf(1, 2, world));
         world.setCreature(new Sheep(19, 19, world));
         world.setCreature(new Sheep(5, 5, world));
+        world.setCreature(new Grass(6, 5, world));
+        world.setCreature(new Grass(10, 10, world));
         //-------------
 
         worldRenderer.initFrame();
