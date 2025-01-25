@@ -3,7 +3,7 @@ package com.github.jacko0b;
 public class Main {
 
     public static void main(String[] args) {
-        World world = new World(20, 20);
+        World world = new World(20, 20, new WorldLogger());
         WorldRenderer worldRenderer = new WorldRenderer(world);
         //WorldLogger
 

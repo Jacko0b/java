@@ -7,10 +7,13 @@ import java.util.List;
 
 public class World {
 
+    public final String[] creatureNames = {"WOLF", "SHEEP", "LION", "RHINOCEROS", "VIPER", "GRASS", "GUARANA", "THORN"};
+
     private final List<List<Creature>> map;
     private int turnCounter;
+    private final WorldLogger logger;
 
-    public World(int width, int height) {
+    public World(int width, int height, WorldLogger logger) {
         map = new ArrayList<>();
         for (int i = 0; i < height; i++) {
             List<Creature> row = new ArrayList<>();
@@ -20,9 +23,11 @@ public class World {
             map.add(row);
         }
         this.turnCounter = 0;
+        this.logger = logger;
     }
 
     public void makeTurn() {
+        getLogger().clear();
         turnCounter++;
         //Tworzenie listy żywych organizmów
         List<Creature> creatures = new ArrayList<>();
@@ -92,6 +97,14 @@ public class World {
         }
     }
 
+    public void deleteAllCreatures() {
+        for (int y = 0; y < getHeight(); y++) {
+            for (int x = 0; x < getWidth(); x++) {
+                map.get(y).set(x, null);
+            }
+        }
+    }
+
     public Creature getCreature(int x, int y) {
         if (isInRange(x, y)) {
             return map.get(y).get(x);
@@ -100,7 +113,7 @@ public class World {
         }
     }
 
-    private boolean isInRange(int x, int y) {
+    public boolean isInRange(int x, int y) {
         return x >= 0 && x < getWidth() && y >= 0 && y < getHeight();
     }
 
@@ -158,7 +171,52 @@ public class World {
         return coords.get(rand);
     }
 
+    public void addCreature(String creatureName, int x, int y) {
+        Creature newOne = null;
+
+        switch (creatureName) {
+            case "WOLF":
+                newOne = new Wolf(x, y, this);
+                break;
+            case "SHEEP":
+                newOne = new Sheep(x, y, this);
+                break;
+            case "LION":
+                newOne = new Lion(x, y, this);
+                break;
+            case "RHINOCEROS":
+                newOne = new Rhinoceros(x, y, this);
+                break;
+            case "VIPER":
+                newOne = new Viper(x, y, this);
+                break;
+            case "THORN":
+                newOne = new Thorn(x, y, this);
+                break;
+            case "GRASS":
+                newOne = new Grass(x, y, this);
+                break;
+            case "GUARANA":
+                newOne = new Guarana(x, y, this);
+                break;
+            default:
+                break;
+        }
+
+        if (newOne != null) {
+            setCreature(newOne);
+        }
+    }
+
     public int getTurnCounter() {
         return this.turnCounter;
+    }
+
+    public WorldLogger getLogger() {
+        return logger;
+    }
+
+    public void setTurnCounter(int turnCounter) {
+        this.turnCounter = turnCounter;
     }
 }

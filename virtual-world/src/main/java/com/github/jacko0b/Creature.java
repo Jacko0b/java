@@ -38,8 +38,6 @@ public abstract class Creature {
 
     public abstract void collision(Creature other);
 
-    public abstract void draw();
-
     public boolean isDead() {
         return dead;
     }

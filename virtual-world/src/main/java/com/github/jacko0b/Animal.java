@@ -7,9 +7,13 @@ public abstract class Animal extends Creature {
 
     private static final double REPRODUCTION_RATE = 0.2;
     protected boolean resting = false;
+    protected int oldX;
+    protected int oldY;
 
     public Animal(int x, int y, World world) {
         super(x, y, world);
+        this.oldX = x;
+        this.oldY = y;
     }
 
     @Override
@@ -43,23 +47,31 @@ public abstract class Animal extends Creature {
                 reproduceWith((Animal) other);
                 this.setResting(true);
                 ((Animal) other).setResting(true);
+                world.getLogger().log(
+                        this.species + "(" + x + "," + y + ") rozmnaża się z "
+                        + other.getSpecies() + "(" + other.getX() + "," + other.getY() + ")"
+                );
             }
         } //kolizja z innym - walka
         else {
             if (other.getStrength() >= this.getStrength()) {
                 // napastnik wygrywa
+                world.getLogger().log(
+                        other.getSpecies() + "(" + other.getX() + "," + other.getY() + ") zabija "
+                        + this.species + "(" + x + "," + y + ")"
+                );
                 world.deleteCreature(this);
                 ((Animal) other).moveTo(this.getX(), this.getY());
+
             } else {
                 // ginie napastnik
+                world.getLogger().log(
+                        this.species + "(" + x + "," + y + ") zabija "
+                        + other.getSpecies() + "(" + other.getX() + "," + other.getY() + ")"
+                );
                 world.deleteCreature(other);
             }
         }
-    }
-
-    @Override
-    public void draw() {
-        System.out.println("draw: " + this);
     }
 
     private void reproduceWith(Animal partner) {
@@ -97,7 +109,9 @@ public abstract class Animal extends Creature {
 
     protected void moveTo(int newX, int newY) {
         world.getMap().get(this.y).set(this.x, null);
+        oldX = this.x;
         this.x = newX;
+        oldY = this.y;
         this.y = newY;
         world.getMap().get(this.y).set(this.x, this);
     }
@@ -108,5 +122,13 @@ public abstract class Animal extends Creature {
 
     public void setResting(boolean resting) {
         this.resting = resting;
+    }
+
+    public int getOldX() {
+        return oldX;
+    }
+
+    public int getOldY() {
+        return oldY;
     }
 }
