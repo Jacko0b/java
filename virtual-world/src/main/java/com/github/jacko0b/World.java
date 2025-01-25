@@ -2,6 +2,7 @@ package com.github.jacko0b;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 public class World {
@@ -135,10 +136,11 @@ public class World {
     // Puste pola w zasięgu
     public List<int[]> getEmptyNeighbors(int x, int y) {
         List<int[]> neighbors = getNeighborsInRange(x, y);
-        neighbors.removeIf(coord -> getCreature(coord[0], coord[1]) != null);
-        for (int[] neighbor : neighbors) {
+        Iterator<int[]> it = neighbors.iterator();
+        while (it.hasNext()) {
+            int[] neighbor = it.next();
             if (getCreature(neighbor[0], neighbor[1]) != null) {
-                neighbors.remove(neighbor);
+                it.remove();
             }
         }
         return neighbors;

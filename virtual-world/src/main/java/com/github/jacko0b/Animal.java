@@ -5,6 +5,7 @@ import java.util.List;
 
 public abstract class Animal extends Creature {
 
+    private static final double REPRODUCTION_RATE = 0.2;
     protected boolean resting = false;
 
     public Animal(int x, int y, World world) {
@@ -26,33 +27,32 @@ public abstract class Animal extends Creature {
             moveTo(newX, newY);
         } //zajęte - kolizja
         else {
-            collision(occupant);
+            occupant.collision(this);
         }
     }
 
     @Override
     public void collision(Creature other) {
         //odpoczynek...
-        if (this.isResting() && Math.random() < 0.5) {
+        if (this.isResting() && Math.random() < REPRODUCTION_RATE) {
             this.setResting(false);
         }
         //kolizja z tym samym gatunkiem - reprodukcja
-        if (this.species == other.getSpecies() && !other.isDead() && !this.isResting() && !((Animal) other).isResting()) {
-            reproduceWith((Animal) other);
-            this.setResting(true);
-            ((Animal) other).setResting(true);
-        }//kolizja z plantem
-        else if (other instanceof Plant) {
-            other.collision(this);
+        if (this.species == other.getSpecies() && !other.isDead()) {
+            if (!this.isResting() && !((Animal) other).isResting()) {
+                reproduceWith((Animal) other);
+                this.setResting(true);
+                ((Animal) other).setResting(true);
+            }
         } //kolizja z innym - walka
         else {
-            if (this.strength >= other.getStrength()) {
-                // this wygrywa
-                world.deleteCreature(other);
-                moveTo(other.getX(), other.getY());
-            } else {
-                // ginę
+            if (other.getStrength() >= this.getStrength()) {
+                // napastnik wygrywa
                 world.deleteCreature(this);
+                ((Animal) other).moveTo(this.getX(), this.getY());
+            } else {
+                // ginie napastnik
+                world.deleteCreature(other);
             }
         }
     }
