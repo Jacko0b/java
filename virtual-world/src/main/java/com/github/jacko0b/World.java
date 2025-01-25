@@ -8,6 +8,7 @@ import java.util.List;
 public class World {
 
     private final List<List<Creature>> map;
+    private int turnCounter;
 
     public World(int width, int height) {
         map = new ArrayList<>();
@@ -18,9 +19,11 @@ public class World {
             }
             map.add(row);
         }
+        this.turnCounter = 0;
     }
 
     public void makeTurn() {
+        turnCounter++;
         //Tworzenie listy żywych organizmów
         List<Creature> creatures = new ArrayList<>();
         for (int y = 0; y < getHeight(); y++) {
@@ -155,4 +158,7 @@ public class World {
         return coords.get(rand);
     }
 
+    public int getTurnCounter() {
+        return this.turnCounter;
+    }
 }
