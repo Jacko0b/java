@@ -10,7 +10,7 @@ public class Main {
         world.setCreature(new Wolf(1, 2, world));
         world.setCreature(new Wolf(3, 2, world));
         world.setCreature(new Wolf(4, 2, world));
-        world.setCreature(new Sheep(19, 19, world));
+        world.setCreature(new Sheep(6, 6, world));
         world.setCreature(new Sheep(5, 5, world));
         world.setCreature(new Viper(2, 2, world));
         world.setCreature(new Viper(2, 3, world));
