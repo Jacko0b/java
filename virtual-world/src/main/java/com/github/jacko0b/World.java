@@ -13,7 +13,7 @@ public class World {
     private int turnCounter;
     private final WorldLogger logger;
 
-    public World(int width, int height, WorldLogger logger) {
+    public World(int width, int height) {
         map = new ArrayList<>();
         for (int i = 0; i < height; i++) {
             List<Creature> row = new ArrayList<>();
@@ -23,13 +23,13 @@ public class World {
             map.add(row);
         }
         this.turnCounter = 0;
-        this.logger = logger;
+        this.logger = new WorldLogger();
     }
 
     public void makeTurn() {
-        getLogger().clear();
+        this.logger.clear();
         turnCounter++;
-        //Tworzenie listy żywych organizmów
+        //Tworzenie listy organizmów
         List<Creature> creatures = new ArrayList<>();
         for (int y = 0; y < getHeight(); y++) {
             for (int x = 0; x < getWidth(); x++) {
@@ -68,18 +68,6 @@ public class World {
                 map.get(creature.getY()).set(creature.getX(), creature);
             } else {
                 throw new IllegalArgumentException("Pole(" + creature.getX() + "," + creature.getY() + ") jest zajęte!");
-            }
-        } else {
-            throw new IllegalArgumentException("Nie można dodać organizmu poza granicami świata!");
-        }
-    }
-
-    public void setCreature(Creature creature, int x, int y) {
-        if (isInRange(x, y)) {
-            if (map.get(y).get(x) == null) {
-                map.get(y).set(x, creature);
-            } else {
-                throw new IllegalArgumentException("Pole(" + x + "," + y + ") jest zajęte!");
             }
         } else {
             throw new IllegalArgumentException("Nie można dodać organizmu poza granicami świata!");

@@ -103,7 +103,7 @@ public abstract class Animal extends Creature {
             case RHINOCEROS:
                 return new Rhinoceros(x, y, world);
             default:
-                throw new IllegalArgumentException("createChild not implemented for " + this.species);
+                throw new IllegalArgumentException("createChild nie dodane dla " + this.species);
         }
     }
 

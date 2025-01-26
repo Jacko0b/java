@@ -1,5 +1,7 @@
 package com.github.jacko0b;
 
+import java.awt.Image;
+
 public abstract class Creature {
 
     public enum Species {
@@ -32,7 +34,7 @@ public abstract class Creature {
         this.collided = false;
     }
 
-    public abstract java.awt.Image getImage();
+    public abstract Image getImage();
 
     public abstract void action();
 
